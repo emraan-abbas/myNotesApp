@@ -1,5 +1,6 @@
 import { useState } from "react";
 import NotesForm from "./components/NotesForm";
+import NoteList from "./components/NoteList";
 
 function App() {
 
@@ -10,9 +11,14 @@ function App() {
     setNotes(updatedNotes)
   }
 
+  const deleteNote = (id) => {
+    setNotes(prev => prev.filter(note => note.id !== id))
+  }
+
   return (
     <>
       <NotesForm addNote={addNote} />
+      <NoteList notes={notes} deleteNote={deleteNote}  />
     </>
   );
 }
