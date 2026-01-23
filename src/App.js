@@ -9,6 +9,11 @@ function App() {
     return savedNotes ? JSON.parse(savedNotes) : []
   })
 
+  const [searchText, setSearchText] = useState('')
+  const filteredNotes = notes.filter(note =>
+    note.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const addNote = (noteData) => {
     const updatedNotes = [...notes, noteData]
     setNotes(updatedNotes)
@@ -32,8 +37,19 @@ function App() {
 
   return (
     <>
+    <div className="container">
+        <div className="container mt-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search notes by title..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+    </div>
       <NotesForm addNote={addNote} />
-      <NoteList notes={notes} deleteNote={deleteNote} updateNote={updateNote} />
+      <NoteList notes={filteredNotes} deleteNote={deleteNote} updateNote={updateNote} />
     </>
   );
 }
