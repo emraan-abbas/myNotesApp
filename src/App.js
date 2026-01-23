@@ -18,6 +18,14 @@ function App() {
     setNotes(prev => prev.filter(note => note.id !== id))
   }
 
+  const updateNote = (id, updatedNote) => {
+    setNotes(prev => 
+      prev.map(note =>
+        note.id === id ? {...note, ...updatedNote} : note
+      )
+    )
+  }
+
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
   }, [notes])
@@ -25,7 +33,7 @@ function App() {
   return (
     <>
       <NotesForm addNote={addNote} />
-      <NoteList notes={notes} deleteNote={deleteNote}  />
+      <NoteList notes={notes} deleteNote={deleteNote} updateNote={updateNote} />
     </>
   );
 }
