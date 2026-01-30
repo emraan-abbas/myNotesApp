@@ -10,8 +10,11 @@ function App() {
   })
 
   const [searchText, setSearchText] = useState('')
-  const filteredNotes = notes.filter(note =>
-    note.title.toLowerCase().includes(searchText.toLowerCase())
+  const filteredNotes = notes.filter(
+    note =>
+      note &&
+      note.title &&
+      note.title.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const addNote = (noteData) => {
