@@ -23,8 +23,15 @@ function App() {
   }
 
   const deleteNote = (id) => {
-    setNotes(prev => prev.filter(note => note.id !== id))
-  }
+    const isConfirmed = window.confirm("Are you sure you want to delete this note?");
+
+    if (!isConfirmed) {
+      return;
+    }
+
+    setNotes(prev => prev.filter(note => note && note.id !== id));
+  };
+
 
   const updateNote = (id, updatedNote) => {
     setNotes(prev => 
