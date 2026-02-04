@@ -17,6 +17,14 @@ function App() {
       note.title.toLowerCase().includes(searchText.toLowerCase())
   );
 
+
+  const [sortType, setSortType] = useState('newest')
+  const sortedNotes = filteredNotes.sort((a, b) => {
+    if (sortType === 'newest') return b.id - a.id;
+    if (sortType === 'oldest') return a.id - b.id;
+    if (sortType === 'aplha') return a.title.localCompare(b.title);
+  })
+
   const addNote = (noteData) => {
     const updatedNotes = [...notes, noteData]
     setNotes(updatedNotes)
@@ -47,6 +55,12 @@ function App() {
 
   return (
     <>
+    <select value={sortType} onChange={e => setSortType(e.target.value)}>
+      <option value='newest'>Newest First</option>
+      <option value='oldest'>Oldest First</option>
+      <option value='alpha'>Alphabatical Order</option>
+    </select>
+
     <div className="container">
         <div className="container mt-3">
           <input
@@ -59,7 +73,7 @@ function App() {
         </div>
     </div>
       <NotesForm addNote={addNote} />
-      <NoteList notes={filteredNotes} deleteNote={deleteNote} updateNote={updateNote} />
+      <NoteList notes={sortedNotes} deleteNote={deleteNote} updateNote={updateNote} />
     </>
   );
 }
